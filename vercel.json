@@ -1,43 +1,25 @@
 {
-    "headers": [
-        {
-            "source": "/Build/(.*).data.gz",
-            "headers": [
-                {
-                    "key": "Content-Encoding",
-                    "value": "gzip"
-                },
-                {
-                    "key": "Content-Type",
-                    "value": "application/octet-stream"
-                }
-            ]
-        },
-        {
-            "source": "/Build/(.*).js.gz",
-            "headers": [
-                {
-                    "key": "Content-Encoding",
-                    "value": "gzip"
-                },
-                {
-                    "key": "Content-Type",
-                    "value": "application/javascript"
-                }
-            ]
-        },
-        {
-            "source": "/Build/(.*).wasm.gz",
-            "headers": [
-                {
-                    "key": "Content-Encoding",
-                    "value": "gzip"
-                },
-                {
-                    "key": "Content-Type",
-                    "value": "application/wasm"
-                }
-            ]
-        }
-    ]
+  "headers": [
+    {
+      "source": "/Build/(.*).data.unityweb",
+      "headers": [
+        { "key": "Content-Encoding", "value": "gzip" },
+        { "key": "Content-Type", "value": "application/octet-stream" }
+      ]
+    },
+    {
+      "source": "/Build/(.*).wasm.unityweb",
+      "headers": [
+        { "key": "Content-Encoding", "value": "gzip" },
+        { "key": "Content-Type", "value": "application/wasm" }
+      ]
+    },
+    {
+      "source": "/Build/(.*).framework.js.unityweb",
+      "headers": [
+        { "key": "Content-Encoding", "value": "gzip" },
+        { "key": "Content-Type", "value": "application/javascript" }
+      ]
+    }
+  ]
 }
