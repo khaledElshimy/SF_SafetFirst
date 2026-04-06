@@ -1,110 +1,62 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SAALBC</title>
+    <title>Unity WebGL Player | Military-defense</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        border: 0;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body {
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         overflow: hidden;
         background: #000;
       }
       #unity-container {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
       }
       #unity-canvas {
         width: 100%;
         height: 100%;
-        background: #000;
         display: block;
       }
-      #unity-loading-bar {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        display: none;
-      }
-      #unity-progress-bar-empty {
-        width: 300px;
-        height: 18px;
-        margin-top: 10px;
-        background: #1a1a1a;
-        border: 1px solid #444;
-        border-radius: 4px;
-        overflow: hidden;
-      }
-      #unity-progress-bar-full {
-        width: 0%;
-        height: 100%;
-        background: #4CAF50;
-        transition: width 0.1s;
-      }
-      #unity-logo {
-        width: 200px;
-        height: auto;
-        display: block;
-        margin: 0 auto 20px auto;
-      }
+      #unity-warning { display: none; }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="unity-container">
       <canvas id="unity-canvas" tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <img id="unity-logo" src="logo.png" alt="SAAL">
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-      </div>
+      <div id="unity-warning"></div>
     </div>
     <script>
+      var canvas = document.querySelector("#unity-canvas");
+      var warningBanner = document.querySelector("#unity-warning");
+
+      function unityShowBanner(msg, type) {
+        if (type === 'error') console.error(msg);
+        else console.warn(msg);
+      }
+
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/b23dd96997961653e2825455633aac82.loader.js";
       var config = {
-        dataUrl: buildUrl + "/bb1482c6648e1dec4f575926f23a78a4.data.unityweb",
-        frameworkUrl: buildUrl + "/42b2090007aed3d0c4888345fbb2779c.framework.js.unityweb",
-        codeUrl: buildUrl + "/a4e0e25d03e6ffc94fdccef9e005f50c.wasm.unityweb",
+        dataUrl:           buildUrl + "/m-d.data.gz",
+        frameworkUrl:      buildUrl + "/m-d.framework.js.gz",
+        codeUrl:           buildUrl + "/m-d.wasm.gz",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "SAALBC",
-        productVersion: "0.1",
+        companyName:       "DefaultCompany",
+        productName:       "Military-defense",
+        productVersion:    "0.1",
+        showBanner:        unityShowBanner,
       };
 
-      var canvas = document.querySelector("#unity-canvas");
-      var loadingBar = document.querySelector("#unity-loading-bar");
-      var progressBarFull = document.querySelector("#unity-progress-bar-full");
-
-      // Match canvas resolution to display size
-      canvas.style.width = "100%";
-      canvas.style.height = "100%";
-
-      loadingBar.style.display = "block";
-
       var script = document.createElement("script");
-      script.src = loaderUrl;
+      script.src = buildUrl + "/m-d.loader.js";
       script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-          loadingBar.style.display = "none";
-        }).catch((message) => {
-          alert(message);
-        });
+        createUnityInstance(canvas, config).catch((msg) => console.error(msg));
       };
       document.body.appendChild(script);
     </script>
-</body>
+  </body>
 </html>
