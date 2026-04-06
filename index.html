@@ -41,9 +41,9 @@
 
       var buildUrl = "Build";
       var config = {
-        dataUrl:           buildUrl + "/m-d.data.gz",
-        frameworkUrl:      buildUrl + "/m-d.framework.js.gz",
-        codeUrl:           buildUrl + "/m-d.wasm.gz",
+        dataUrl:           buildUrl + "/m-d.data.unityweb",
+        frameworkUrl:      buildUrl + "/m-d.framework.js.unityweb",
+        codeUrl:           buildUrl + "/m-d.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName:       "DefaultCompany",
         productName:       "Military-defense",
@@ -52,7 +52,7 @@
       };
 
       var script = document.createElement("script");
-      script.src = buildUrl + "/m-d.loader.js";
+      script.src = buildUrl + "/m-d.loader.js"; // loader is never compressed
       script.onload = () => {
         createUnityInstance(canvas, config).catch((msg) => console.error(msg));
       };
